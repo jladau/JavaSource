@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<launchConfiguration type="org.eclipse.jdt.launching.localJavaApplication">
+    <listAttribute key="org.eclipse.debug.core.MAPPED_RESOURCE_PATHS">
+        <listEntry value="/Utilities/src/edu/ucsf/BIOM/Rarefier/RarefierLauncher.java"/>
+    </listAttribute>
+    <listAttribute key="org.eclipse.debug.core.MAPPED_RESOURCE_TYPES">
+        <listEntry value="1"/>
+    </listAttribute>
+    <booleanAttribute key="org.eclipse.jdt.launching.ATTR_EXCLUDE_TEST_CODE" value="true"/>
+    <booleanAttribute key="org.eclipse.jdt.launching.ATTR_USE_CLASSPATH_ONLY_JAR" value="false"/>
+    <stringAttribute key="org.eclipse.jdt.launching.MAIN_TYPE" value="edu.ucsf.BIOM.Rarefier.RarefierLauncher"/>
+    <stringAttribute key="org.eclipse.jdt.launching.PROGRAM_ARGUMENTS" value="--sBIOMPath=/home/jladau/Desktop/research/Data/Microbial_Community_Samples/Homes.UnitedStates.Bacteria.Barberan.biom&#10;--iRarefactionTotal=10000&#10;--sOutputPath=/home/jladau/Desktop/temp.tab&#10;--bCheckRarefied=true"/>
+    <stringAttribute key="org.eclipse.jdt.launching.PROJECT_ATTR" value="Utilities"/>
+</launchConfiguration>

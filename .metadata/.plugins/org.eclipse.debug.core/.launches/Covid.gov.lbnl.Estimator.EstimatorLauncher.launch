@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<launchConfiguration type="org.eclipse.jdt.launching.localJavaApplication">
+    <listAttribute key="org.eclipse.debug.core.MAPPED_RESOURCE_PATHS">
+        <listEntry value="/Covid/src/gov/lbnl/Estimator/EstimatorLauncher.java"/>
+    </listAttribute>
+    <listAttribute key="org.eclipse.debug.core.MAPPED_RESOURCE_TYPES">
+        <listEntry value="1"/>
+    </listAttribute>
+    <booleanAttribute key="org.eclipse.jdt.launching.ATTR_EXCLUDE_TEST_CODE" value="true"/>
+    <booleanAttribute key="org.eclipse.jdt.launching.ATTR_USE_CLASSPATH_ONLY_JAR" value="false"/>
+    <stringAttribute key="org.eclipse.jdt.launching.MAIN_TYPE" value="gov.lbnl.Estimator.EstimatorLauncher"/>
+    <stringAttribute key="org.eclipse.jdt.launching.PROGRAM_ARGUMENTS" value="--sDataPath=/home/jladau/Desktop/covid-19-microbiome/final-version/in-progress/ifr-estimator-validation/temp.2.csv &#10;--iRandomSeed=1234 &#10;--iStartTime=2458909 &#10;--iEndTime=2459153 &#10;--iWindowSize=-1 &#10;--sMode=all_estimates&#10;//--sOutputPath=/home/jladau/Desktop/covid-19-microbiome/final-version/in-progress/ifr-estimator-validation/temp.3.csv&#10;--sOutputPath=/home/jladau/Desktop/temp.1.csv&#10;--bTimeIntegrated=true&#10;--iIterations=2"/>
+    <stringAttribute key="org.eclipse.jdt.launching.PROJECT_ATTR" value="Covid"/>
+</launchConfiguration>

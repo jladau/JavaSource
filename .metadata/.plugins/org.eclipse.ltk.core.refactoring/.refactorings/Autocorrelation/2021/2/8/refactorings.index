@@ -1,0 +1,6 @@
+1613844605924	Rename package 'ecu.ucsf.OptimizeAssociation'
+1613844615626	Rename package 'ecu.ucsf.OptimizeBetaDiversityAssociation'
+1613844642367	Rename package 'edu.ucsf.OptimizeBetaDiversityAssociation'
+1613844672859	Rename type 'OptimizeAssociationLauncher'
+1613851622973	Rename type 'BetaDiversityAssociationNew'
+1613857559429	Rename type 'FastQuantileRegressionData'

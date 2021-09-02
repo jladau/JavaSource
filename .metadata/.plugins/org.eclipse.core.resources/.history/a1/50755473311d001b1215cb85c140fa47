@@ -1,0 +1,192 @@
+package gov.lbnl.SimulateCaseFatalityRates2;
+
+import java.util.HashMap;
+import java.util.HashSet;
+
+public abstract class Region{
+
+	/**Map from times to data**/
+	protected HashMap<Integer,Data> mapData;
+	
+	/**Fips**/
+	public String sFips;
+	
+	/**Starting time**/
+	public int iStartTime;
+	
+	/**Ending time**/
+	public int iEndTime;
+	
+	/**All times**/
+	protected HashSet<Integer> setTimes;
+	
+	public Region(String sFips, int iStartTime, int iEndTime){
+		mapData = new HashMap<Integer,Data>(365);
+		this.sFips = sFips;
+		this.iStartTime = iStartTime;
+		this.iEndTime = iEndTime;	
+		setTimes = new HashSet<Integer>(iEndTime-iStartTime+1);
+		for(int i=iStartTime;i<=iEndTime;i++){
+			setTimes.add(i);
+		}
+	}
+	
+	/**Total number of cases inferred from moments estimator based on Wallenius' noncentral hypergeometric distribution**/
+	public void estimateTotalCases(int iTime){
+		
+		//***********************************
+		System.out.println(this.sFips + " , " + get("tests",iTime) + " , " + get("population",iTime) + " , " + get("odds_ratio",iTime));
+		
+		//***********************************
+		
+		put("cases_total_estimate",iTime, get("cases_observed",iTime)/(1.-Math.pow(1.-(get("tests",iTime)-get("cases_obeserved",iTime))/get("population",iTime), get("odds_ratio",iTime))));	
+	}
+	
+	public boolean contains(String sVariable, int iTime){
+		if(mapData.get(iTime).dW!=0){
+			return true;
+		}else{
+			return false;
+		}
+	}
+	
+	public double get(String sVariable, int iTime){
+		
+		if(iTime<iStartTime || iEndTime<iEndTime){
+			return Double.NaN;
+		}
+		
+		if(sVariable.equals("mortality")){
+			return mapData.get(iTime).dM;
+		}else if(sVariable.equals("cases_observed")){
+			return mapData.get(iTime).dK;
+		}else if(sVariable.equals("cases_total")){
+			return mapData.get(iTime).dC;
+		}else if(sVariable.equals("case_fatality_rate")){
+			return mapData.get(iTime).dPhi;
+		}else if(sVariable.equals("tests")){
+			return mapData.get(iTime).dT;
+		}else if(sVariable.equals("population")){
+			return mapData.get(iTime).dP;
+		}else if(sVariable.equals("odds_ratio")){
+			return mapData.get(iTime).dW;
+		}else if(sVariable.equals("cases_total_estimate")){
+			return mapData.get(iTime).dCHat;
+		}else {
+			return Double.NaN;
+		}
+	}
+	
+	public void reset(String sVariable, int iTime){
+		
+		if(iTime<iStartTime || iEndTime<iEndTime){
+			return;
+		}
+		
+		if(sVariable.equals("mortality")){
+			mapData.get(iTime).dM=0;
+		}else if(sVariable.equals("cases_observed")){
+			mapData.get(iTime).dK=0;
+		}else if(sVariable.equals("cases_total")){
+			mapData.get(iTime).dC=0;
+		}else if(sVariable.equals("case_fatality_rate")){
+			mapData.get(iTime).dPhi=0;
+		}else if(sVariable.equals("tests")){
+			mapData.get(iTime).dT=0;
+		}else if(sVariable.equals("population")){
+			mapData.get(iTime).dP = 0;
+		}else if(sVariable.equals("odds_ratio")){
+			mapData.get(iTime).dW = 0;
+		}else if(sVariable.equals("cases_total_estimate")){
+			mapData.get(iTime).dCHat = 0;
+		}
+	}
+	
+	public void putSum(String sVariable, int iTime, double dValue){
+		
+		if(iTime<iStartTime || iEndTime<iEndTime){
+			return;
+		}
+		
+		if(!mapData.containsKey(iTime)){
+			mapData.put(iTime,new Data());
+		}
+		if(sVariable.equals("mortality")){
+			mapData.get(iTime).dM += dValue;
+		}else if(sVariable.equals("cases_observed")){
+			mapData.get(iTime).dK += dValue;
+		}else if(sVariable.equals("cases_total")){
+			mapData.get(iTime).dC += dValue;
+		}else if(sVariable.equals("tests")){
+			mapData.get(iTime).dT += dValue;
+		}else if(sVariable.equals("population")){
+			mapData.get(iTime).dP += dValue;
+		}
+	}
+	
+	public void put(String sVariable, int iTime, double dValue){
+		
+		if(iTime<iStartTime || iEndTime<iEndTime){
+			return;
+		}
+		
+		if(!mapData.containsKey(iTime)){
+			mapData.put(iTime,new Data());
+		}
+		if(sVariable.equals("mortality")){
+			mapData.get(iTime).dM = dValue;
+		}else if(sVariable.equals("cases_observed")){
+			mapData.get(iTime).dK = dValue;
+		}else if(sVariable.equals("cases_total")){
+			mapData.get(iTime).dC = dValue;
+		}else if(sVariable.equals("case_fatality_rate")){
+			mapData.get(iTime).dPhi = dValue;
+		}else if(sVariable.equals("tests")){
+			mapData.get(iTime).dT = dValue;
+		}else if(sVariable.equals("population")){
+			mapData.get(iTime).dP = dValue;
+		}else if(sVariable.equals("odds_ratio")){
+			mapData.get(iTime).dW = dValue;
+		}else if(sVariable.equals("cases_total_estimate")){
+			mapData.get(iTime).dCHat = dValue;
+		}
+	}
+	
+	public Data data(int iTime){
+		return mapData.get(iTime);
+	}
+	
+	public HashSet<Integer> times(){
+		return setTimes;
+	}
+	
+	public class Data{
+		
+		/**Mortality**/
+		public double dM=0;
+		
+		/**Observed cases**/
+		public double dK=0;
+		
+		/**Total cases**/
+		public double dC=0;
+
+		/**Total cases estimated**/
+		public double dCHat=0;
+		
+		/**Case fatality rate**/
+		public double dPhi=0;
+		
+		/**Tests**/
+		public double dT=0;
+
+		/**Population**/
+		public double dP=0;
+		
+		/**Odds ratio of testing an infected versus uninfected person**/
+		public double dW=0;
+		
+		public Data(){	
+		}	
+	}
+}

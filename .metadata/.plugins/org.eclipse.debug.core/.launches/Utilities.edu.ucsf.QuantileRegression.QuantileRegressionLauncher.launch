@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<launchConfiguration type="org.eclipse.jdt.launching.localJavaApplication">
+    <listAttribute key="org.eclipse.debug.core.MAPPED_RESOURCE_PATHS">
+        <listEntry value="/Utilities/src/edu/ucsf/QuantileRegression/QuantileRegressionLauncher.java"/>
+    </listAttribute>
+    <listAttribute key="org.eclipse.debug.core.MAPPED_RESOURCE_TYPES">
+        <listEntry value="1"/>
+    </listAttribute>
+    <booleanAttribute key="org.eclipse.jdt.launching.ATTR_EXCLUDE_TEST_CODE" value="true"/>
+    <booleanAttribute key="org.eclipse.jdt.launching.ATTR_USE_CLASSPATH_ONLY_JAR" value="false"/>
+    <stringAttribute key="org.eclipse.jdt.launching.MAIN_TYPE" value="edu.ucsf.QuantileRegression.QuantileRegressionLauncher"/>
+    <stringAttribute key="org.eclipse.jdt.launching.PROGRAM_ARGUMENTS" value="--sDataPath=/home/jladau/Desktop/beta-diversity/fungi-regression-data-unmerged.csv &#10;--setXHeaders=BRAY_CURTIS,BETA_J,FRACTION_OUTDOOR_TAXA_INDOORS &#10;--setYHeaders=IFR_STATE,R0 &#10;--iNullIterations=1000 &#10;--iWindowSize=20 &#10;--rgdPercentages=0.05,0.1,0.15,0.2,0.25,0.3,0.35,0.4,0.45,0.5,0.55,0.6,0.65,0.7,0.75,0.8,0.85,0.9 &#10;--iRandomSeed=1234 &#10;--sOutputPath=/home/jladau/Desktop/beta-diversity/temp.3.csv"/>
+    <stringAttribute key="org.eclipse.jdt.launching.PROJECT_ATTR" value="Utilities"/>
+</launchConfiguration>

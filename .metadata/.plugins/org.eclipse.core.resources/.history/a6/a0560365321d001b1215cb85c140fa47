@@ -1,0 +1,180 @@
+package gov.lbnl.SimulateCaseFatalityRates2;
+
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Random;
+
+import edu.ucsf.base.ExtendedMath;
+
+public class State extends Region{
+
+	/**Alpha value**/
+	public double dAlphaTime;
+	
+	/**Counties within state (keys are fips)**/
+	public HashMap<String,County> mapCounties;
+	
+	/**Start time: time of first case or mortality**/
+	public double dStartTime;
+	
+	/**End time: time of las case or mortality**/
+	public double dEndTime;
+	
+	public State(String sFips, int iStartTime, int iEndTime){
+		super(sFips, iStartTime, iEndTime);
+		mapCounties = new HashMap<String,County>(300);
+		dStartTime = Double.MAX_VALUE;
+		dEndTime = -Double.MAX_VALUE;
+	}
+	
+	public void putSum(String sCountyFips, String sVariable, int iTime, double dValue){
+		if(!mapCounties.containsKey(sCountyFips)) {
+			mapCounties.put(sCountyFips,new County(sCountyFips, iStartTime, iEndTime));
+		}
+		mapCounties.get(sCountyFips).putSum(sVariable, iTime, dValue);
+	}
+	
+	public void put(String sCountyFips, String sVariable, int iTime, double dValue){
+
+		//updating county variable
+		if(!mapCounties.containsKey(sCountyFips)) {
+			mapCounties.put(sCountyFips,new County(sCountyFips, iStartTime, iEndTime));
+		}
+		mapCounties.get(sCountyFips).put(sVariable,iTime,dValue);
+		
+		//updating start and end time if necessary
+		if(sVariable.equals("mortality") || sVariable.equals("cases_observed") || sVariable.equals("cases_total") || sVariable.equals("case_fatality_rate")) {
+			if(dValue>0){
+				if(iTime<dStartTime){
+					dStartTime=iTime;
+				}
+				if(iTime>dEndTime){
+					dEndTime=iTime;
+				}
+			}
+		}
+	}
+	
+	public void simulateObservedCasesPerCounty(int iRandomSeed){
+		for(Integer iTime:times()){
+			reset("cases_observed",iTime);
+			for(County cty1:counties()){
+				
+				//************************
+				//System.out.println(cty1.sFips + "," 
+				//		+ iTime + " , " 
+				//		+ cty1.get("tests",iTime) + " , " 
+				//		+ cty1.get("odds_ratio", iTime) + " , " 
+				//		+ cty1.get("cases_total",iTime) + " , " 
+				//		+ cty1.get("mortality",iTime) + " , " 
+				//		+ cty1.get("population", iTime));
+				//************************
+				
+				
+				simulateObservedCasesPerCounty(cty1,iTime,iRandomSeed+19*iRandomSeed);
+			}
+		}
+	}
+	
+	private void simulateObservedCasesPerCounty(County cty1, int iTime, int iRandomSeed){
+		
+		//i1 = observed number of cases
+		//dPr = current probability of case
+		//iTRemaining = number of tests remaining
+		//dCRemaining = total cases remaining
+		//dNotCRemaining = total non-cases remaining
+		//dW = odds ratio
+		//rnd1 = random number generator
+		
+		int i1;
+		int iTRemaining;
+		double dPr;
+		double dW;
+		double dCRemaining;
+		double dNotCRemaining;
+		Random rnd1;
+		
+		i1 = 0;
+		iTRemaining = (int) cty1.get("tests",iTime);
+		dCRemaining = cty1.get("cases_total",iTime);
+		dNotCRemaining = cty1.get("population", iTime) -  dCRemaining;
+		dW = cty1.get("odds_ratio", iTime);
+		rnd1 = new Random(iRandomSeed);
+		while(iTRemaining>0){
+			dPr = dW*dCRemaining/(dW*dCRemaining+dNotCRemaining);
+			if(rnd1.nextDouble()<dPr){
+				i1++;
+				dCRemaining--;
+			}else {
+				dNotCRemaining--;
+			}
+			iTRemaining--;
+		}
+		put(cty1.sFips,"cases_observed",iTime,(double) i1);
+		putSum("cases_observed",iTime,(double) i1);
+	}
+	
+	public void distributeTestsRandomlyAmongCounties(Random rnd1){
+		for(Integer iTime:times()){
+			distributeTestsRandomlyAmongCounties(iTime,rnd1);
+		}
+	}
+	
+	private void distributeTestsRandomlyAmongCounties(int iTime, Random rnd1){
+		
+		//i1 = number of tests remaining
+		//i2 = current number of tests being distributed
+		
+		int i1;
+		int i2;
+		
+		i1 = (int) Math.round(get("tests",iTime));
+		reset("tests",iTime);
+		for(County cty1: this.counties()){
+			i2 = (int) Math.ceil(Math.max(0,cty1.get("cases_observed",iTime)));
+			i2 = (int) Math.ceil(Math.max(i2,cty1.get("mortality",iTime)));
+			put(cty1.sFips,"tests", iTime, (double) i2);
+			i1-=i2;
+		}
+		while(i1>0){
+			for(County cty1:this.counties()){
+				i2 = (int) (rnd1.nextDouble()*0.2*i1 + cty1.get("tests",iTime));
+				put(cty1.sFips,"tests", iTime, (double) i2);
+				i1-=i2;
+				if(i1<=0){
+					break;
+				}
+			}
+		}
+		for(County cty1:this.counties()){
+			putSum("tests",iTime,cty1.get("tests",iTime));
+		}
+	}
+	
+	public void simulateTotalCasesPerCounty(double dVariance, int iRandomSeed){
+		
+		//d1 = current normal variate
+		//d2 = current value
+		
+		double d1;
+		double d2;
+		
+		for(Integer iTime:times()){
+			reset("cases_total",iTime);
+			for(County cty1:counties()){
+				d2 = Math.pow(dAlphaTime, (double)(iTime-this.dStartTime))*cty1.dAlphaCounty+1;
+				d1 = ExtendedMath.normalRandomVector(0,dVariance,1)[0];
+				while(d2+d1<1){
+					d1 = ExtendedMath.normalRandomVector(0,dVariance,1)[0];
+				}
+				d2=cty1.get("mortality",iTime)*(d2+d1);
+				put(cty1.sFips,"cases_total",iTime,d2);
+				putSum("cases_total",iTime,d2);
+			}
+		}
+	}
+	
+	public HashSet<County> counties(){
+		return new HashSet<County>(mapCounties.values());
+	}
+}

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/Shared"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER">
+		<attributes>
+			<attribute name="module" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/home/jladau/Documents/Research/Java/external-libraries/guava-18.0.jar"/>
+	<classpathentry kind="lib" path="/home/jladau/Documents/Research/Java/external-libraries/joda-time-2.3.jar"/>
+	<classpathentry kind="lib" path="/home/jladau/Documents/Research/Java/external-libraries/jump-1.2/lib/bsh-2.0b1.jar"/>
+	<classpathentry kind="lib" path="/home/jladau/Documents/Research/Java/external-libraries/jump-1.2/lib/jai_codec.jar"/>
+	<classpathentry kind="lib" path="/home/jladau/Documents/Research/Java/external-libraries/jump-1.2/lib/jai_core.jar"/>
+	<classpathentry kind="lib" path="/home/jladau/Documents/Research/Java/external-libraries/jump-1.2/lib/Jama-1.0.1.jar"/>
+	<classpathentry kind="lib" path="/home/jladau/Documents/Research/Java/external-libraries/jump-1.2/lib/jdom.jar"/>
+	<classpathentry kind="lib" path="/home/jladau/Documents/Research/Java/external-libraries/jump-1.2/lib/jts-1.7.2.jar"/>
+	<classpathentry kind="lib" path="/home/jladau/Documents/Research/Java/external-libraries/jump-1.2/lib/jump-core-1.2.jar"/>
+	<classpathentry kind="lib" path="/home/jladau/Documents/Research/Java/external-libraries/jump-1.2/lib/jump-workbench-1.2.jar"/>
+	<classpathentry kind="lib" path="/home/jladau/Documents/Research/Java/external-libraries/jump-1.2/lib/postgis_1_0_0.jar"/>
+	<classpathentry kind="lib" path="/home/jladau/Documents/Research/Java/external-libraries/jump-1.2/lib/postgresql-8.1dev-403.jdbc2.jar"/>
+	<classpathentry kind="lib" path="/home/jladau/Documents/Research/Java/external-libraries/jump-1.2/lib/xercesImpl.jar"/>
+	<classpathentry kind="lib" path="/home/jladau/Documents/Research/Java/external-libraries/jump-1.2/lib/xml-apis.jar"/>
+	<classpathentry kind="lib" path="/home/jladau/Documents/Research/Java/external-libraries/commons-math3-3.5.jar"/>
+	<classpathentry kind="lib" path="/home/jladau/Documents/Research/Java/external-libraries/commons-lang3-3.4.jar"/>
+	<classpathentry kind="lib" path="/home/jladau/Documents/Research/Java/external-libraries/weka.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>

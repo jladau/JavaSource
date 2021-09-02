@@ -1,0 +1,61 @@
+package gov.lbnl.SimulateCaseFatalityRates2;
+
+import java.util.Random;
+import edu.ucsf.io.ArgumentIO;
+import edu.ucsf.io.DataIO;
+
+//TODO offset time (+18 days) for cases_observed and tests in input
+
+
+public class SimulateCaseFatalityRates2Launcher{
+
+	public static void main(String rgsArgs[]){
+		
+		//arg1 = arguments
+		//dat1 = all data, including mortality, population (county), tests (state), odds_ratio (country) 
+		//rnd1 = random number generator
+		//ctr1 = country object
+		
+		ArgumentIO arg1;
+		DataIO dat1;
+		Random rnd1;
+		Country ctr1;
+		
+		//loading variables
+		arg1 = new ArgumentIO(rgsArgs);
+		dat1 = new DataIO(arg1.getValueString("sDataPath"));
+		rnd1 = new Random(arg1.getValueInt("iRandomSeed"));
+		
+		//loading data
+		ctr1 = new Country(arg1.getValueInt("iStartTime"),arg1.getValueInt("iEndTime"));
+		ctr1.loadData(dat1);
+		
+		//loading alpha values for each county
+		for(County cty1:ctr1.counties()){
+			ctr1.setAlphaCounty(cty1, 10. + 1000.*rnd1.nextDouble());
+		}
+		
+		//loading time-dependence
+		for(State sta1:ctr1.states()){
+			ctr1.setAlphaTime(sta1, arg1.getValueDouble("dAlphaTime"));
+		}
+		
+		//loading numbers of tests for each county
+		ctr1.distributeTestsRandomlyAmongCounties(rnd1);
+		
+		//simulating numbers of total cases in each county
+		ctr1.simulateTotalCasesPerCounty(arg1.getValueDouble("dVariance"), arg1.getValueInt("iRandomSeed"));
+		
+		//simulating observed numbers of cases in each county
+		ctr1.simulateObservedCasesPerCounty(arg1.getValueInt("iRandomSeed"));
+		
+		//loading total case estimates
+		ctr1.loadTotalCaseEstimates();
+		
+		//outputting results
+		DataIO.writeToFile(
+				ctr1.print(arg1.getValueString("sStateFips"),new String[]{"mortality"},new String[]{"cases_total","cases_total_estimate"}),
+				arg1.getValueString("sOutputPath"));
+		System.out.println("Done.");
+	}
+}

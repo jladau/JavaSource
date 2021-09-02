@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename package &apos;TimeWindowSums&apos; to &apos;edu.ucsf.TimeWindowSums&apos;&#x0A;- Original project: &apos;Utilities&apos;&#x0A;- Original element: &apos;Utilities/src/TimeWindowSums&apos;&#x0A;- Renamed element: &apos;Utilities/src/edu.ucsf.TimeWindowSums&apos;&#x0A;- Update references to refactored element&#x0A;- Update textual occurrences in comments and strings" description="Rename package &apos;TimeWindowSums&apos;" flags="589830" hierarchical="false" id="org.eclipse.jdt.ui.rename.package" input="/src&lt;TimeWindowSums" name="edu.ucsf.TimeWindowSums" qualified="false" references="true" stamp="1606253985428" textual="false" version="1.0"/>
+</session>

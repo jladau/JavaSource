@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<launchConfiguration type="org.eclipse.jdt.launching.localJavaApplication">
+    <listAttribute key="org.eclipse.debug.core.MAPPED_RESOURCE_PATHS">
+        <listEntry value="/Covid/src/gov/lbnl/SimulateData/SimulateDataLauncher.java"/>
+    </listAttribute>
+    <listAttribute key="org.eclipse.debug.core.MAPPED_RESOURCE_TYPES">
+        <listEntry value="1"/>
+    </listAttribute>
+    <booleanAttribute key="org.eclipse.jdt.launching.ATTR_EXCLUDE_TEST_CODE" value="true"/>
+    <booleanAttribute key="org.eclipse.jdt.launching.ATTR_USE_CLASSPATH_ONLY_JAR" value="false"/>
+    <stringAttribute key="org.eclipse.jdt.launching.MAIN_TYPE" value="gov.lbnl.SimulateData.SimulateDataLauncher"/>
+    <stringAttribute key="org.eclipse.jdt.launching.PROGRAM_ARGUMENTS" value="--sDataPath=/home/jladau/Desktop/temp.csv&#10;--sOutputPath=/home/jladau/Desktop/conditional-distribution.csv&#10;--sMode=conditional&#10;--dIntercept=0&#10;--dSlope=0.027"/>
+    <stringAttribute key="org.eclipse.jdt.launching.PROJECT_ATTR" value="Covid"/>
+</launchConfiguration>

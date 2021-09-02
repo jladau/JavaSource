@@ -1,0 +1,316 @@
+package gov.lbnl.SimulateCaseFatalityRates2;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Random;
+
+import edu.ucsf.io.DataIO;
+
+public class Country extends Region{
+
+	/**Map from state names to states**/
+	private HashMap<String,State> mapStates;
+	
+	public Country(int iStartTime, int iEndTime){
+		super(null, iStartTime, iEndTime);
+	}
+	
+	public void putSum(String sStateFips, String sVariable, int iTime, double dValue){
+		
+		//updating state variable
+		if(!mapStates.containsKey(sStateFips)) {
+			mapStates.put(sStateFips,new State(sStateFips, iStartTime, iEndTime));
+		}
+		mapStates.get(sStateFips).putSum(sVariable,iTime,dValue);
+	}
+
+	public void putSum(String sCountyFips, String sStateFips, String sVariable, int iTime, double dValue){
+		
+		//updating state variable
+		if(!mapStates.containsKey(sStateFips)) {
+			mapStates.put(sStateFips,new State(sStateFips, iStartTime, iEndTime));
+		}
+		mapStates.get(sStateFips).putSum(sCountyFips,sVariable,iTime,dValue);
+	}
+	
+	public void put(String sStateFips, String sVariable, int iTime, double dValue){
+
+		//updating state variable
+		if(!mapStates.containsKey(sStateFips)) {
+			mapStates.put(sStateFips,new State(sStateFips, iStartTime, iEndTime));
+		}
+		mapStates.get(sStateFips).put(sVariable,iTime,dValue);
+	}
+	
+	public void put(String sCountyFips, String sStateFips, String sVariable, int iTime, double dValue){
+		
+		//updating state variable
+		if(!mapStates.containsKey(sStateFips)) {
+			mapStates.put(sStateFips,new State(sStateFips, iStartTime, iEndTime));
+		}
+		mapStates.get(sStateFips).put(sCountyFips, sVariable,iTime,dValue);
+	}
+	
+	public void loadData(DataIO dat1){
+		
+		//sStateFips = current state fips
+		//sCountyFips = current county fips
+		//sVariable = variable
+		//iTime = time
+		//dValue = value
+		
+		String sCountyFips;
+		String sStateFips;
+		String sVariable;
+		int iTime;
+		double dValue;
+		
+		mapData = new HashMap<Integer,Data>(365);
+		mapStates = new HashMap<String,State>(50);
+		for(int i=1;i<dat1.iRows;i++){
+			
+			sStateFips = dat1.getString(i,"STATE_FIPS");
+			sCountyFips = dat1.getString(i,"COUNTY_FIPS");
+			sVariable = dat1.getString(i,"VARIABLE");
+			if(!sVariable.equals("population")){
+				iTime =  dat1.getInteger(i,"TIME");
+			}else{
+				iTime = iStartTime;
+			}
+			dValue = dat1.getDouble(i,"VALUE");
+			
+			//county-level variable
+			if(!sCountyFips.equals("NA")){
+				put(sCountyFips,sStateFips,sVariable,iTime,dValue);
+				putSum(sStateFips,sVariable,iTime,dValue);
+				putSum(sVariable,iTime,dValue);
+			}else{
+				
+				//state-level variable
+				if(!sStateFips.equals("NA")){
+					put(sStateFips,sVariable,iTime,dValue);
+					putSum(sVariable,iTime,dValue);
+					
+				//country-level variable	
+				}else{
+					put(sVariable,iTime,dValue);
+				}
+			}
+		}
+		percolateOddsRatios();
+		percolatePopulation();
+	}
+	
+	public void loadTotalCaseEstimates(){
+		for(State sta1:states()){
+			for(Integer iTime:setTimes){
+				mapStates.get(sta1.sFips).estimateTotalCases(iTime);
+			}
+		}
+	}
+	
+	public ArrayList<String> print(String sStateFips, String rgsCountyVariables[], String rgsStateVariables[]){
+		
+		//lstOut = output
+		//sta1 = state of interest
+		//d1 = value
+		
+		ArrayList<String> lstOut;
+		State sta1;
+		double d1;
+		
+		lstOut = new ArrayList<String>(setTimes.size()*rgsCountyVariables.length*rgsStateVariables.length+1);
+		lstOut.add("COUNTY_FIPS,VARIABLE,TIME,VALUE");
+		sta1 = mapStates.get(sStateFips);
+		for(County cty1:sta1.counties()){
+			for(Integer iTime:setTimes){
+				for(String sVariable:rgsCountyVariables){
+					d1 = cty1.get(sVariable,iTime);
+					if(d1>0){
+						lstOut.add(cty1.sFips + "," + sVariable + "," + iTime + "," + d1);
+					}
+				}
+			}
+		}
+		for(Integer iTime:setTimes){
+			for(String sVariable:rgsStateVariables){
+				d1 = sta1.get(sVariable,iTime);
+				
+				//*******************************
+				System.out.println(sVariable + "," + d1);
+				//*******************************
+				
+				if(d1>0){
+					lstOut.add("NA" + "," + sVariable + "," + iTime + "," + d1);
+				}
+			}
+		}
+		return lstOut;
+	}
+	
+	private void percolateOddsRatios(){
+		if(contains("odds_ratio",iStartTime)){
+			for(Integer iTime:times()){
+				for(State sta1:states()){
+					put(sta1.sFips,"odds_ratio",iTime,get("odds_ratio",iTime));
+					for(County cty1:sta1.counties()){
+						put(cty1.sFips, sta1.sFips, "odds_ratio", iTime, get("odds_ratio",iTime));
+					}
+				}
+			}
+		}
+	}
+
+	public void percolatePopulation(){
+		if(contains("population",iStartTime)){
+			for(Integer iTime:times()){
+				put("population",iTime,get("population",iStartTime));
+				for(State sta1:states()){
+					put(sta1.sFips, "population",iTime,sta1.get("population",iStartTime));
+					for(County cty1:sta1.counties()){
+						put(cty1.sFips, sta1.sFips, "population", iTime, cty1.get("population",iStartTime));
+					}
+				}
+			}
+		}
+	}
+	
+	public HashSet<County> counties(){
+		
+		//setOut = output
+		
+		HashSet<County> setOut;
+		
+		setOut = new HashSet<County>(3500);
+		for(State sta1:states()){
+			setOut.addAll(mapStates.get(sta1.sFips).counties());
+		}
+		return setOut;
+	}
+	
+	public HashSet<State> states(){
+		return new HashSet<State>(mapStates.values());
+	}
+	
+	public void putTests(String sFips, int iTests, int iTime){
+		
+		//sStateFips = state fips
+		
+		String sStateFips;
+		
+		if(sFips.length()==2){
+			sStateFips=sFips;
+			put(sStateFips,"tests",iTime,(double) iTests);
+			putSum("tests",iTime,(double) iTests);
+		}else if(sFips.length()==5){
+			sStateFips = sFips.substring(0,2);
+			put(sFips,sStateFips,"tests",iTime,(double) iTests);
+			putSum(sStateFips,"tests",iTime,(double) iTests);
+			putSum("tests",iTime,(double) iTests);
+		}
+	}
+	
+	public void distributeTestsRandomlyAmongCounties(Random rnd1){
+		for(String s:this.mapStates.keySet()) {
+			mapStates.get(s).distributeTestsRandomlyAmongCounties(rnd1);
+		}
+	}
+	
+	public void simulateTotalCasesPerCounty(double dVariance, int iRandomSeed){
+		
+		//TODO need to offset time for cases and mortality
+		
+		for(State sta1:states()){
+			sta1.simulateTotalCasesPerCounty(dVariance,iRandomSeed);
+		}
+		for(Integer iTime:setTimes){
+			reset("cases_total",iTime);
+			for(State sta1:states()){
+				putSum("cases_total",iTime,sta1.get("cases_total",iTime));
+			}
+		}
+	}
+	
+	public void simulateObservedCasesPerCounty(int iRandomSeed){
+		
+		//i1 = counter
+		
+		int i1;
+		
+		i1 = 0;
+		for(String sStateFips:this.mapStates.keySet()){
+			mapStates.get(sStateFips).simulateObservedCasesPerCounty(iRandomSeed + i1);
+			i1+=17;
+		}
+		for(Integer iTime:setTimes){
+			reset("cases_observed",iTime);
+			for(State sta1:states()){
+				putSum("cases_observed",iTime,sta1.get("cases_total",iTime));
+			}
+		}
+	}
+	
+	public void simulateObservedCasesPerState(int iRandomSeed){
+		for(Integer iTime:times()){
+			reset("cases_observed",iTime);
+			for(County cty1:counties()){
+				simulateObservedCasesPerCounty(cty1,iTime,iRandomSeed+19*iRandomSeed);
+			}
+		}
+	}
+	
+	private void simulateObservedCasesPerCounty(County cty1, int iTime, int iRandomSeed){
+		
+		//i1 = observed number of cases
+		//dPr = current probability of case
+		//iTRemaining = number of tests remaining
+		//dCRemaining = total cases remaining
+		//dNotCRemaining = total non-cases remaining
+		//dW = odds ratio
+		//rnd1 = random number generator
+		
+		int i1;
+		int iTRemaining;
+		double dPr;
+		double dW;
+		double dCRemaining;
+		double dNotCRemaining;
+		Random rnd1;
+		
+		i1 = 0;
+		iTRemaining = (int) cty1.get("tests",iTime);
+		dCRemaining = cty1.get("cases_total",iTime);
+		dNotCRemaining = cty1.get("population", iTime) -  dCRemaining;
+		dW = cty1.get("odds_ratio", iTime);
+		rnd1 = new Random(iRandomSeed);
+		while(iTRemaining>0){
+			dPr = dW*dCRemaining/(dW*dCRemaining+dNotCRemaining);
+			if(rnd1.nextDouble()<dPr){
+				i1++;
+				dCRemaining--;
+			}else {
+				dNotCRemaining--;
+			}
+			iTRemaining--;
+		}
+		put(cty1.sFips,"cases_observed",iTime,(double) i1);
+		putSum("cases_observed",iTime,(double) i1);
+	}
+	
+	
+	
+	public void setAlphaCounty(County cty1, double dAlphaCounty){
+		
+		//sStateFips = state fips
+		
+		String sStateFips;
+		
+		sStateFips = cty1.sFips.substring(0,2);
+		mapStates.get(sStateFips).mapCounties.get(cty1.sFips).dAlphaCounty =  dAlphaCounty;
+	}
+	
+	public void setAlphaTime(State sta1, double dAlphaTime){
+		mapStates.get(sta1.sFips).dAlphaTime =  dAlphaTime;
+	}
+}

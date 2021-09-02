@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<launchConfiguration type="org.eclipse.jdt.launching.localJavaApplication">
+    <listAttribute key="org.eclipse.debug.core.MAPPED_RESOURCE_PATHS">
+        <listEntry value="/Covid/src/gov/lbnl/UpdateVariables/UpdateVariablesLauncher.java"/>
+    </listAttribute>
+    <listAttribute key="org.eclipse.debug.core.MAPPED_RESOURCE_TYPES">
+        <listEntry value="1"/>
+    </listAttribute>
+    <booleanAttribute key="org.eclipse.jdt.launching.ATTR_EXCLUDE_TEST_CODE" value="true"/>
+    <booleanAttribute key="org.eclipse.jdt.launching.ATTR_USE_CLASSPATH_ONLY_JAR" value="false"/>
+    <stringAttribute key="org.eclipse.jdt.launching.MAIN_TYPE" value="gov.lbnl.UpdateVariables.UpdateVariablesLauncher"/>
+    <stringAttribute key="org.eclipse.jdt.launching.PROGRAM_ARGUMENTS" value="--sResponsePath=/home/jladau/Desktop/case-fatality-rate-estimation/temp.1-responses.csv&#10;--sRawPredictorsPath=/home/jladau/Desktop/case-fatality-rate-estimation/mortality-data/mortality-data-36.csv&#10;--sMergedPredictorsPath=/home/jladau/Desktop/case-fatality-rate-estimation/temp.39.csv&#10;--sEstimatesPath=/home/jladau/Desktop/case-fatality-rate-estimation/coefficient-estimates.csv&#10;--sResponseOutputPath=/home/jladau/Desktop/case-fatality-rate-estimation/temp.40-responses.csv&#10;--sPredictorOutputPath=/home/jladau/Desktop/case-fatality-rate-estimation/temp.40-predictors.csv"/>
+    <stringAttribute key="org.eclipse.jdt.launching.PROJECT_ATTR" value="Covid"/>
+</launchConfiguration>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<launchConfiguration type="org.eclipse.jdt.launching.localJavaApplication">
+    <listAttribute key="org.eclipse.debug.core.MAPPED_RESOURCE_PATHS">
+        <listEntry value="/Autocorrelation/src/edu/ucsf/BetaDiversityAssociation/BetaDiversityAssociationLauncher.java"/>
+    </listAttribute>
+    <listAttribute key="org.eclipse.debug.core.MAPPED_RESOURCE_TYPES">
+        <listEntry value="1"/>
+    </listAttribute>
+    <booleanAttribute key="org.eclipse.jdt.launching.ATTR_EXCLUDE_TEST_CODE" value="true"/>
+    <booleanAttribute key="org.eclipse.jdt.launching.ATTR_USE_CLASSPATH_ONLY_JAR" value="false"/>
+    <stringAttribute key="org.eclipse.jdt.launching.MAIN_TYPE" value="edu.ucsf.BetaDiversityAssociation.BetaDiversityAssociationLauncher"/>
+    <stringAttribute key="org.eclipse.jdt.launching.PROGRAM_ARGUMENTS" value="--sRegressionType=windowed_quantile &#10;--bRemoveUnclassified=true &#10;--sMode=hierarchical_partitioning &#10;--sOutputPath=/home/jladau/Desktop/covid-19-microbiome/final-version/hierarchical-partitioning/temp.2.csv &#10;--iWindowSize=20 &#10;--sMetric=bray_curtis &#10;--sTaxonRank=otu &#10;--iPartitioningOrders=100 &#10;--iNullIterations=100 &#10;--sBIOMPath=/home/jladau/Documents/Research/Data/Microbial_Community_Samples/Homes.UnitedStates.Fungi.Barberan10k.biom &#10;--sSamplesToKeepPath=/home/jladau/Desktop/covid-19-microbiome/final-version/results-otu/samples-with-complete-data/samples-with-complete-data.csv &#10;--sResponseDataPath=/home/jladau/Desktop/covid-19-microbiome/final-version/results-otu/compile-covid-data/compiled-covid-data-2020-03-01_2020-10-31-paired.csv &#10;--sSample1Header=SAMPLE_INDOOR &#10;--sSample2Header=SAMPLE_OUTDOOR &#10;--sResponse=IFR_COUNTY &#10;--sMergeHeader=COUNTY_FIPS &#10;--sTaxonGroupsMapPath=/home/jladau/Desktop/covid-19-microbiome/final-version/results-otu/groups-map-all-taxa/taxon-groups-all-taxa.csv &#10;--rgdThresholds=75 &#10;--dObservedValueThreshold=0.01"/>
+    <stringAttribute key="org.eclipse.jdt.launching.PROJECT_ATTR" value="Autocorrelation"/>
+    <stringAttribute key="org.eclipse.jdt.launching.VM_ARGUMENTS" value="--add-opens=java.base/java.lang=ALL-UNNAMED"/>
+</launchConfiguration>

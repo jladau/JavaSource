@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<launchConfiguration type="org.eclipse.jdt.launching.localJavaApplication">
+    <listAttribute key="org.eclipse.debug.core.MAPPED_RESOURCE_PATHS">
+        <listEntry value="/Utilities/src/edu/ucsf/MultipleQuantileRegression0/MultipleQuantileRegressionLauncher.java"/>
+    </listAttribute>
+    <listAttribute key="org.eclipse.debug.core.MAPPED_RESOURCE_TYPES">
+        <listEntry value="1"/>
+    </listAttribute>
+    <booleanAttribute key="org.eclipse.jdt.launching.ATTR_EXCLUDE_TEST_CODE" value="true"/>
+    <booleanAttribute key="org.eclipse.jdt.launching.ATTR_USE_CLASSPATH_ONLY_JAR" value="false"/>
+    <stringAttribute key="org.eclipse.jdt.launching.MAIN_TYPE" value="edu.ucsf.MultipleQuantileRegression0.MultipleQuantileRegressionLauncher"/>
+    <stringAttribute key="org.eclipse.jdt.launching.PROGRAM_ARGUMENTS" value="--sDataPath=/home/jladau/Desktop/individual-taxa/temp.13.csv&#10;--iWindowSize=20&#10;--rgsXHeaders=IFR_COUNTY &#10;--rgsResponses=INDOOR_k__Fungi;p__Basidiomycota;c__Agaricomycetes;o__Corticiales;f__Corticiaceae,OUTDOOR_k__Fungi;p__Basidiomycota;c__Agaricomycetes;o__Corticiales;f__Corticiaceae&#10;--sOutputPath=/home/jladau/Desktop/temp.csv&#10;--rgdPercentages=0.25,0.5,0.75&#10;--iRandomSeed=1234&#10;--bRandomizeResponses=false&#10;--bRandomizePredictors=false&#10;--iNullIterations=3&#10;--iTaxa=1000"/>
+    <stringAttribute key="org.eclipse.jdt.launching.PROJECT_ATTR" value="Utilities"/>
+</launchConfiguration>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<launchConfiguration type="org.eclipse.jdt.launching.localJavaApplication">
+    <listAttribute key="org.eclipse.debug.core.MAPPED_RESOURCE_PATHS">
+        <listEntry value="/Utilities/src/edu/ucsf/ConstrainedRegression/ConstrainedRegressionLauncher.java"/>
+    </listAttribute>
+    <listAttribute key="org.eclipse.debug.core.MAPPED_RESOURCE_TYPES">
+        <listEntry value="1"/>
+    </listAttribute>
+    <booleanAttribute key="org.eclipse.jdt.launching.ATTR_EXCLUDE_TEST_CODE" value="true"/>
+    <booleanAttribute key="org.eclipse.jdt.launching.ATTR_USE_CLASSPATH_ONLY_JAR" value="false"/>
+    <stringAttribute key="org.eclipse.jdt.launching.MAIN_TYPE" value="edu.ucsf.ConstrainedRegression.ConstrainedRegressionLauncher"/>
+    <stringAttribute key="org.eclipse.jdt.launching.PROGRAM_ARGUMENTS" value="--sDataPath=/home/jladau/Desktop/temp.csv&#10;--lstPredictors=COUNTY_01063,COUNTY_01061,COUNTY_01023,COUNTY_01067,COUNTY_01021,COUNTY_01065,COUNTY_01103,COUNTY_01027,COUNTY_01101,COUNTY_01025,COUNTY_01069,COUNTY_01019,COUNTY_01017,COUNTY_01073,COUNTY_01071,COUNTY_01033,COUNTY_01077,COUNTY_01111,COUNTY_01031,COUNTY_01075,COUNTY_01037,COUNTY_01115,COUNTY_01035,COUNTY_01079,COUNTY_01113,COUNTY_01107,COUNTY_01105,COUNTY_01029,COUNTY_01109,COUNTY_01081,COUNTY_01041,COUNTY_01085,COUNTY_01083,COUNTY_01121,COUNTY_01001,COUNTY_01045,COUNTY_01089,COUNTY_01043,COUNTY_01087,COUNTY_01125,COUNTY_01005,COUNTY_01049,COUNTY_01123,COUNTY_01003,COUNTY_01047,COUNTY_01119,COUNTY_01039,COUNTY_01117,COUNTY_01091,COUNTY_01051,COUNTY_01095,COUNTY_01093,COUNTY_01011,COUNTY_01055,COUNTY_01099,COUNTY_01133,COUNTY_01053,COUNTY_01097,COUNTY_01131,COUNTY_01015,COUNTY_01059,COUNTY_01013,COUNTY_01057,COUNTY_01129,COUNTY_01009,COUNTY_01127,COUNTY_01007&#10;--sResponse=TESTS_POSITIVE_ADJUSTED"/>
+    <stringAttribute key="org.eclipse.jdt.launching.PROJECT_ATTR" value="Utilities"/>
+</launchConfiguration>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<launchConfiguration type="org.eclipse.jdt.launching.localJavaApplication">
+    <listAttribute key="org.eclipse.debug.core.MAPPED_RESOURCE_PATHS">
+        <listEntry value="/Autocorrelation"/>
+    </listAttribute>
+    <listAttribute key="org.eclipse.debug.core.MAPPED_RESOURCE_TYPES">
+        <listEntry value="4"/>
+    </listAttribute>
+    <booleanAttribute key="org.eclipse.jdt.launching.ATTR_EXCLUDE_TEST_CODE" value="true"/>
+    <booleanAttribute key="org.eclipse.jdt.launching.ATTR_USE_CLASSPATH_ONLY_JAR" value="false"/>
+    <stringAttribute key="org.eclipse.jdt.launching.MAIN_TYPE" value="edu.ucsf.BetaDiversityHierarchicalPartitioning.BetaDiversityHierarchicalPartitioningLauncher"/>
+    <stringAttribute key="org.eclipse.jdt.launching.PROGRAM_ARGUMENTS" value="--sBIOMPath=/home/jladau/Documents/Research/Data/Microbial_Community_Samples/Homes.UnitedStates.Fungi.Barberan10k.biom &#10;--bRemoveUnclassified=true &#10;--sResponseDataPath=/home/jladau/Desktop/correlated-ifr-data/simulated-correlated-data.csv &#10;--sSample1Header=SAMPLE_INDOOR &#10;--sSample2Header=SAMPLE_OUTDOOR &#10;--sResponse=IFR &#10;--sOutputPath=/home/jladau/Desktop/beta-diversity-hierarchical-partitioning/temp.3.csv &#10;--sTaxonRank=genus &#10;--sMergeHeader=COUNTY_FIPS &#10;--bRandomizeY=false &#10;--iNullIterations=25 &#10;--iOrderings=25"/>
+    <stringAttribute key="org.eclipse.jdt.launching.PROJECT_ATTR" value="Autocorrelation"/>
+</launchConfiguration>
